@@ -15,7 +15,8 @@ default: &default
   pool: 5
   username: root
   password: monaq
-  socket: /tmp/mysql.sock
+  host: localhost
+  port: 3306
 
 development:
   <<: *default
@@ -49,6 +50,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
   database: realm_production
   username: realm
   password: <%= ENV['REALM_DATABASE_PASSWORD'] %>
