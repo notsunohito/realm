@@ -4,7 +4,11 @@ class DomainsController < ApplicationController
   # GET /domains
   # GET /domains.json
   def index
-    @domains = Domain.all
+    if index_params[:key].present?
+      @domains = Domain.where(key: index_params[:key])
+    else
+      @domains = Domain.all
+    end
   end
 
   # GET /domains/1
@@ -67,7 +71,10 @@ class DomainsController < ApplicationController
       @domain = Domain.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def index_params
+      params.permit(:key)
+    end
+
     def domain_params
       params.require(:domain).permit(:key, :name)
     end
